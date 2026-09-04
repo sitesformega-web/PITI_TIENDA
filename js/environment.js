@@ -1,3 +1,3 @@
 export const ENVIRONMENT = {
-  catalogUrl: "https://script.google.com/macros/s/AKfycbyHX9oatOYwjOrQ3taN38eQKcr5wl0g2KhtxELkJQSSJjsy0QFekVL8t9DhQUYCarn57w/exec"
+  catalogUrl: "https://script.google.com/macros/s/AKfycbyC9ifaNNSEmbED_L0_nLIIjrbDIxTU3vhP3HS4qzUDBveGUyq26MNZug_u5FdLUX34/exec"
 };
