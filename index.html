@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Catálogo</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/app.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>
+      <img id="storeLogo" src="" alt="" onerror="this.style.display='none'">
+      <span id="catalogTitle">Catálogo</span>
+    </h1>
+    <div class="controls">
+      <input class="search" placeholder="Buscar..." id="searchInput" />
+    </div>
+    <div id="stats" class="small">Mostrando <span id="count">0</span> productos</div>
+  </header>
+
+  <main class="shell">
+    <aside class="sidebar sticky" id="catsAside">
+      <div class="sidebar-title"><span>Categorías</span></div>
+      <div class="sidebar-scroll">
+        <div class="category-buttons" id="categoryButtons"></div>
+      </div>
+    </aside>
+
+    <section>
+      <div class="grid" id="grid">
+        <div class="loader-back" id="loader">
+          <div class="loader-circle">🐶</div>
+          <div>Cargando productos...</div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="sidebar sticky" id="cartAside">
+      <div class="sidebar-title">
+        <span>Carrito</span>
+        <span class="small" id="cartCountSmall">0</span>
+      </div>
+      <div class="sidebar-scroll">
+        <div id="cartItems"></div>
+        <div class="stack-actions">
+          <button id="sendCartBtn" class="btn btn-carrito">Enviar pedido por WhatsApp</button>
+          <button id="clearCartBtn" class="btn btn-dark">Vaciar carrito</button>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <a class="powered-by" id="poweredBy" href="#" target="_blank" rel="noopener">
+        <span id="poweredByLabel">POWERED BY</span><strong id="poweredByName">ASTREA</strong>
+      </a>
+      <div class="store-footer">
+        <span class="store-copyright" id="storeCopyright"></span>
+        <div class="footer-right" id="socialLinks"></div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<div class="fab-row" aria-hidden="false">
+  <button class="fab" id="openCatsFab">☰ Categorías</button>
+  <button class="fab" id="openCartFab">🛒 Carrito (<span id="cartCountFab">0</span>)</button>
+</div>
+
+<div class="drawer-back" id="catsDrawerBack" aria-hidden="true">
+  <div class="drawer" role="dialog" aria-modal="true">
+    <div class="drawer-head">
+      <div class="drawer-title">Categorías</div>
+      <button class="close" id="closeCatsDrawer">✕</button>
+    </div>
+    <div class="drawer-body">
+      <div class="category-buttons" id="categoryButtonsMobile"></div>
+    </div>
+  </div>
+</div>
+
+<div class="drawer-back" id="cartDrawerBack" aria-hidden="true">
+  <div class="drawer" role="dialog" aria-modal="true">
+    <div class="drawer-head">
+      <div class="drawer-title">Carrito</div>
+      <button class="close" id="closeCartDrawer">✕</button>
+    </div>
+    <div class="drawer-body">
+      <div id="cartItemsMobile"></div>
+      <div class="stack-actions">
+        <button id="sendCartBtnMobile" class="btn btn-carrito">Enviar pedido por WhatsApp</button>
+        <button id="clearCartBtnMobile" class="btn btn-dark">Vaciar carrito</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-back" id="modalBack" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-head">
+      <strong id="mTitle">Producto</strong>
+      <button class="close" id="closeModal">✕</button>
+    </div>
+    <div class="row">
+      <div class="left">
+        <div id="mThumb" class="modal-main-image"></div>
+        <div id="mGallery" class="modal-gallery"></div>
+        <div id="mDesc" class="small modal-description"></div>
+      </div>
+      <div class="right">
+        <div class="modal-details">
+          <div><span class="small">Código</span><div id="mCode" class="modal-value"></div></div>
+          <div><span class="small">Categoría</span><div id="mCat" class="small modal-category-value"></div></div>
+          <div><span class="small">Stock</span><div id="mStock" class="small modal-value"></div></div>
+          <div class="modal-actions">
+            <button id="modalCarrito" class="btn btn-carrito">Agregar al carrito</button>
+          </div>
+          <div id="modalNote" class="small modal-note"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="./js/app.js"></script>
+</body>
+</html>
