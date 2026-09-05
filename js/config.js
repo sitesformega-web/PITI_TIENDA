@@ -16,7 +16,7 @@ export const STORE_CONFIG = {
   },
   texts: {
     searchPlaceholder: "Buscar por nombre, código o descripción...",
-    demoNote: "* Demo de catálogo POGGY."
+    demoNote: " "
   }
 };
 
