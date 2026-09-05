@@ -1,11 +1,11 @@
 export const STORE_CONFIG = {
   name: "PITI TIENDA",
   catalogTitle: "PITI TIENDA",
-  logo: "https://github.com/sitesformega-web/POGGY/blob/main/PIC's/POGGY.png?raw=true",
+  logo: "https://raw.githubusercontent.com/sitesformega-web/PITI_TIENDA/main/STOCK/PITI%20TIENDA.png",
   colors: {
     background: "#f6f7fb",
     surface: "#ffffff",
-    accent: "#1b2a15",
+    accent: "#c96b14",
     muted: "#666666"
   },
   contact: {
