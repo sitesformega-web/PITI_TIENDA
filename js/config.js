@@ -1,18 +1,18 @@
 export const STORE_CONFIG = {
-  name: "POGGY",
-  catalogTitle: "Catálogo Poggy",
+  name: "PITI TIENDA",
+  catalogTitle: "PITI TIENDA",
   logo: "https://github.com/sitesformega-web/POGGY/blob/main/PIC's/POGGY.png?raw=true",
   colors: {
     background: "#f6f7fb",
     surface: "#ffffff",
-    accent: "#e47a7a",
+    accent: "#1b2a15",
     muted: "#666666"
   },
   contact: {
     whatsapp: "595971506233"
   },
   social: {
-    instagram: "https://www.instagram.com/poggy.py/"
+    instagram: "https://www.instagram.com/gs4_fortin_pitiantuta/"
   },
   texts: {
     searchPlaceholder: "Buscar por nombre, código o descripción...",
