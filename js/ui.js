@@ -19,6 +19,17 @@ export function truncateText(text, max){
   return value.length <= max ? value : value.slice(0, max).trim() + "...";
 }
 
+function showAddedFeedback(button){
+  if(!button) return;
+  const originalText = button.textContent;
+  button.textContent = "✓ Agregado";
+  button.classList.add("btn-added");
+  window.setTimeout(() => {
+    button.textContent = originalText;
+    button.classList.remove("btn-added");
+  }, 1200);
+}
+
 export function applyBranding(store, platform){
   document.title = store.catalogTitle;
   document.documentElement.style.setProperty("--bg", store.colors.background);
@@ -126,6 +137,7 @@ export function renderProducts(list, { onOpen, onAdd }){
     addButton.addEventListener("click", event => {
       event.stopPropagation();
       onAdd(product.id);
+      showAddedFeedback(addButton);
     });
     buttons.appendChild(addButton);
     content.appendChild(buttons);
@@ -201,7 +213,11 @@ export function openModal(product, onAdd){
   renderModalImage(product, initialImage);
   renderModalGallery(product, gallery, initialImage);
 
-  document.getElementById("modalCarrito").onclick = () => onAdd(product.id);
+  const modalCartButton = document.getElementById("modalCarrito");
+  modalCartButton.onclick = () => {
+    onAdd(product.id);
+    showAddedFeedback(modalCartButton);
+  };
   const modalBack = document.getElementById("modalBack");
   modalBack.style.display = "flex";
   modalBack.setAttribute("aria-hidden", "false");
