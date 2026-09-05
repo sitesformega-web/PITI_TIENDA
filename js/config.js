@@ -9,7 +9,7 @@ export const STORE_CONFIG = {
     muted: "#666666"
   },
   contact: {
-    whatsapp: "595971506233"
+    whatsapp: "595971222146"
   },
   social: {
     instagram: "https://www.instagram.com/gs4_fortin_pitiantuta/"
