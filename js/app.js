@@ -11,6 +11,8 @@ import {
 import {
   getCart,
   addToCart,
+  incrementCartItem,
+  decrementCartItem,
   removeFromCart,
   clearCart,
   openWhatsAppOrder
@@ -34,8 +36,9 @@ const cartDrawerBack = document.getElementById("cartDrawerBack");
 
 function refreshCatalog(){
   renderProducts(filterProducts(searchInput.value), {
-    onOpen: product => openModal(product, handleAddToCart),
-    onAdd: handleAddToCart
+    storeConfig: STORE_CONFIG,
+    onOpen: product => openModal(product, handleAddToCart, STORE_CONFIG),
+    onAdd: id => handleAddToCart(id, 1)
   });
 }
 
@@ -50,16 +53,27 @@ function refreshCategories(){
 }
 
 function refreshCart(){
-  renderCart(getCart(), id => {
-    removeFromCart(id);
-    refreshCart();
+  renderCart(getCart(), {
+    storeConfig: STORE_CONFIG,
+    onIncrement: id => {
+      incrementCartItem(id);
+      refreshCart();
+    },
+    onDecrement: id => {
+      decrementCartItem(id);
+      refreshCart();
+    },
+    onRemove: id => {
+      removeFromCart(id);
+      refreshCart();
+    }
   });
 }
 
-function handleAddToCart(id){
+function handleAddToCart(id, quantity = 1){
   const product = getProductById(id);
   if(!product) return;
-  addToCart(product);
+  addToCart(product, quantity);
   closeModal();
   refreshCart();
 }
