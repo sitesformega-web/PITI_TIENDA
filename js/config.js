@@ -8,11 +8,22 @@ export const STORE_CONFIG = {
     accent: "#c96b14",
     muted: "#666666"
   },
+  currency: {
+    locale: "es-PY",
+    code: "PYG",
+    label: "Gs."
+  },
   contact: {
     whatsapp: "595971222146"
   },
   social: {
     instagram: "https://www.instagram.com/gs4_fortin_pitiantuta/"
+  },
+  promo: {
+    image: "",
+    mobileImage: "",
+    link: "",
+    alt: "Promoción"
   },
   texts: {
     searchPlaceholder: "Buscar por nombre, código o descripción...",
