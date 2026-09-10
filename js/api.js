@@ -23,10 +23,13 @@ function getProductGallery(raw){
   const fromArray = Array.isArray(raw.galeriaArray) ? raw.galeriaArray : [];
   const fromText = splitGallery(raw["Galería"] || "");
   const cover = raw.Imagen ? [raw.Imagen] : [];
+  return uniq(cover.concat(fromArray, fromText).map(fixImageUrl).filter(Boolean));
+}
 
-  return uniq(
-    cover.concat(fromArray, fromText).map(fixImageUrl).filter(Boolean)
-  );
+function normalizePrice(value){
+  if(value === "" || value === null || value === undefined) return null;
+  const price = Number(value);
+  return Number.isFinite(price) && price >= 0 ? price : null;
 }
 
 function mapProduct(raw){
@@ -39,6 +42,7 @@ function mapProduct(raw){
     name: String(raw.Nombre || "").trim(),
     category: String(raw["Categoría"] || "").trim(),
     desc: String(raw["Descripción"] || "").trim(),
+    price: normalizePrice(raw.Precio),
     img: cover,
     gallery,
     stock: String(raw.Stock || "N/D").trim() || "N/D"
