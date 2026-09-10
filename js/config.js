@@ -20,7 +20,7 @@ export const STORE_CONFIG = {
     instagram: "https://www.instagram.com/gs4_fortin_pitiantuta/"
   },
   promo: {
-    image: "",
+    image: "https://raw.githubusercontent.com/sitesformega-web/PITI_TIENDA/main/STOCK/banner%201200x240.jpg",
     mobileImage: "",
     link: "",
     alt: "Promoción"
