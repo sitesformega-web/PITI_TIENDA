@@ -33,7 +33,7 @@ import {
   closeModal,
   openDrawer,
   closeDrawer
-} from "./ui.js?v=commercial-conditions-v1";
+} from "./ui.js?v=public-copy-v1";
 
 const searchInput = document.getElementById("searchInput");
 const catsDrawerBack = document.getElementById("catsDrawerBack");
