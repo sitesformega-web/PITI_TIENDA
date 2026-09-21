@@ -1,4 +1,4 @@
-import { buildPublicCopy } from "./legal-copy.js?v=public-copy-v1";
+import { buildPublicCopy } from "./legal-copy.js?v=notice-takedown-v1";
 
 const instagramIcon = `
 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -90,7 +90,7 @@ export function applyBranding(store, platform){
   renderPromo(store.promo);
   renderSocialLinks(store.social);
   renderBusinessInfo(store.business);
-  renderPublicCopy(store.business);
+  renderPublicCopy(store.business, platform);
   renderCommercialConditions(store.business);
 }
 
@@ -236,7 +236,39 @@ function configurePublicContactLink(target, value){
   return true;
 }
 
-function renderPublicCopy(business){
+function buildContentReportUrl(baseUrl, businessName){
+  const cleanBase = String(baseUrl || "").trim();
+
+  if(!cleanBase){
+    return "";
+  }
+
+  if(!cleanBase.toLowerCase().startsWith("mailto:")){
+    return cleanBase;
+  }
+
+  const separator = cleanBase.includes("?") ? "&" : "?";
+  const subject = "Reporte de contenido o uso indebido - Catálogo Express®";
+  const body = [
+    "Hola ASTREA™,",
+    "",
+    "Quiero reportar contenido o uso indebido en un catálogo.",
+    "",
+    `Comercio: ${String(businessName || "").trim() || "-"}`,
+    `URL del catálogo: ${window.location.href}`,
+    "",
+    "Tipo de reporte:",
+    "Contenido o producto reportado:",
+    "Descripción:",
+    "Evidencia o enlaces relevantes:",
+    "",
+    "Contacto para respuesta (opcional):"
+  ].join("\n");
+
+  return `${cleanBase}${separator}subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+function renderPublicCopy(business, platform){
   business = business || {};
   const copy = buildPublicCopy(business);
 
@@ -248,6 +280,26 @@ function renderPublicCopy(business){
   setPublicCopyText("publicCatalogTitle", copy.catalog.title);
   setPublicCopyText("publicCatalogText1", copy.catalog.paragraphs[0]);
   setPublicCopyText("publicCatalogText2", copy.catalog.paragraphs[1]);
+
+  const reportLink = document.getElementById("publicContentReportLink");
+  const reportBaseUrl = String(
+    platform?.channels?.contentReportUrl || ""
+  ).trim();
+
+  if(reportLink){
+    reportLink.textContent = copy.catalog.reportLinkLabel;
+
+    if(reportBaseUrl){
+      reportLink.href = buildContentReportUrl(
+        reportBaseUrl,
+        business.businessName
+      );
+      reportLink.hidden = false;
+    }else{
+      reportLink.removeAttribute("href");
+      reportLink.hidden = true;
+    }
+  }
 
   setPublicCopyText("publicConsumerTitle", copy.consumer.title);
   setPublicCopyText("publicConsumerText", copy.consumer.text);
