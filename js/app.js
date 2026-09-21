@@ -1,5 +1,5 @@
 import { STORE_CONFIG, PLATFORM_CONFIG } from "./config.js";
-import { fetchProducts } from "./api.js";
+import { fetchProducts, fetchBusinessConfig } from "./api.js";
 import {
   setProducts,
   getProductById,
@@ -34,10 +34,32 @@ const searchInput = document.getElementById("searchInput");
 const catsDrawerBack = document.getElementById("catsDrawerBack");
 const cartDrawerBack = document.getElementById("cartDrawerBack");
 
+let ACTIVE_STORE_CONFIG = STORE_CONFIG;
+
+function buildStoreConfig(business = {}){
+  const businessName = String(business.businessName || "").trim();
+
+  return {
+    ...STORE_CONFIG,
+    name: businessName || STORE_CONFIG.name,
+    catalogTitle: businessName || STORE_CONFIG.catalogTitle,
+    contact: {
+      ...STORE_CONFIG.contact,
+      whatsapp: String(business.whatsapp || "").trim()
+    },
+    social: {
+      instagram: String(business.socialInstagram || "").trim(),
+      facebook: String(business.socialFacebook || "").trim(),
+      tiktok: String(business.socialTikTok || "").trim()
+    },
+    business
+  };
+}
+
 function refreshCatalog(){
   renderProducts(filterProducts(searchInput.value), {
-    storeConfig: STORE_CONFIG,
-    onOpen: product => openModal(product, handleAddToCart, STORE_CONFIG),
+    storeConfig: ACTIVE_STORE_CONFIG,
+    onOpen: product => openModal(product, handleAddToCart, ACTIVE_STORE_CONFIG),
     onAdd: id => handleAddToCart(id, 1)
   });
 }
@@ -54,7 +76,7 @@ function refreshCategories(){
 
 function refreshCart(){
   renderCart(getCart(), {
-    storeConfig: STORE_CONFIG,
+    storeConfig: ACTIVE_STORE_CONFIG,
     onIncrement: id => {
       incrementCartItem(id);
       refreshCart();
@@ -79,11 +101,20 @@ function handleAddToCart(id, quantity = 1){
 }
 
 async function bootstrap(){
-  applyBranding(STORE_CONFIG, PLATFORM_CONFIG);
-  refreshCart();
   setLoading(true);
 
   try{
+    try{
+      const business = await fetchBusinessConfig();
+      ACTIVE_STORE_CONFIG = buildStoreConfig(business);
+    }catch(error){
+      console.error("No se pudo cargar la información pública del comercio.", error);
+      ACTIVE_STORE_CONFIG = buildStoreConfig({});
+    }
+
+    applyBranding(ACTIVE_STORE_CONFIG, PLATFORM_CONFIG);
+    refreshCart();
+
     setProducts(await fetchProducts());
     refreshCategories();
     refreshCatalog();
@@ -112,8 +143,8 @@ cartDrawerBack.addEventListener("click", event => {
   if(event.target === cartDrawerBack) closeDrawer(cartDrawerBack);
 });
 
-document.getElementById("sendCartBtn").addEventListener("click", () => openWhatsAppOrder(STORE_CONFIG));
-document.getElementById("sendCartBtnMobile").addEventListener("click", () => openWhatsAppOrder(STORE_CONFIG));
+document.getElementById("sendCartBtn").addEventListener("click", () => openWhatsAppOrder(ACTIVE_STORE_CONFIG));
+document.getElementById("sendCartBtnMobile").addEventListener("click", () => openWhatsAppOrder(ACTIVE_STORE_CONFIG));
 
 function handleClearCart(){
   clearCart();
