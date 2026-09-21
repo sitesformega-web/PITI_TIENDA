@@ -88,6 +88,7 @@ export function applyBranding(store, platform){
   renderPromo(store.promo);
   renderSocialLinks(store.social);
   renderBusinessInfo(store.business);
+  renderCommercialConditions(store.business);
 }
 
 function renderSocialLinks(social){
@@ -191,6 +192,136 @@ function renderBusinessInfo(business){
   );
 
   section.hidden = false;
+}
+
+
+const DELIVERY_LABELS = {
+  delivery: "Delivery",
+  pickup: "Retiro en local",
+  other: "Otra modalidad"
+};
+
+const PAYMENT_LABELS = {
+  cash: "Efectivo",
+  banktransfer: "Transferencia bancaria",
+  pos: "POS",
+  other: "Otro"
+};
+
+function toBusinessList(value){
+  if(Array.isArray(value)){
+    return value.map(item => String(item || "").trim()).filter(Boolean);
+  }
+
+  return String(value || "")
+    .split(/[\n,;]+/)
+    .map(item => item.trim())
+    .filter(Boolean);
+}
+
+function humanizeBusinessList(value, labels){
+  return toBusinessList(value)
+    .map(item => labels[String(item).toLowerCase()] || item)
+    .join(" · ");
+}
+
+function setCommerceText(id, value){
+  const target = document.getElementById(id);
+  if(!target) return false;
+
+  const clean = String(value || "").trim();
+  target.textContent = clean;
+  target.hidden = !clean;
+  return Boolean(clean);
+}
+
+function setCommerceLine(lineId, valueId, value){
+  const line = document.getElementById(lineId);
+  const target = document.getElementById(valueId);
+  const clean = String(value || "").trim();
+
+  if(!line || !target) return false;
+
+  target.textContent = clean;
+  line.hidden = !clean;
+  return Boolean(clean);
+}
+
+function renderCommercialConditions(business){
+  business = business || {};
+
+  const openButton = document.getElementById("openCommerceConditions");
+  const modal = document.getElementById("commerceConditionsModal");
+  const closeButton = document.getElementById("commerceConditionsCloseBtn");
+  const doneButton = document.getElementById("commerceConditionsDoneBtn");
+
+  const deliveryMethods = humanizeBusinessList(business.deliveryMethods, DELIVERY_LABELS);
+  const paymentMethods = humanizeBusinessList(business.paymentMethods, PAYMENT_LABELS);
+
+  const hasDeliveryMethods = setCommerceLine(
+    "commerceDeliveryMethodsLine",
+    "commerceDeliveryMethods",
+    deliveryMethods
+  );
+
+  const hasPickupAddress = setCommerceLine(
+    "commercePickupAddressLine",
+    "commercePickupAddress",
+    business.pickupAddress
+  );
+
+  const hasDeliveryInfo = setCommerceText("commerceDeliveryInfo", business.deliveryInfo);
+  const hasPickupInfo = setCommerceText("commercePickupInfo", business.pickupInfo);
+
+  const hasPaymentMethods = setCommerceLine(
+    "commercePaymentMethodsLine",
+    "commercePaymentMethods",
+    paymentMethods
+  );
+
+  const hasPaymentInfo = setCommerceText("commercePaymentInfo", business.paymentInfo);
+  const hasReturns = setCommerceText("commerceReturnsPolicy", business.returnsPolicy);
+  const hasWarranty = setCommerceText("commerceWarrantyPolicy", business.warrantyPolicy);
+  const hasSpecial = setCommerceText("commerceCustomProductNotice", business.customProductNotice);
+
+  const deliverySection = document.getElementById("commerceDeliverySection");
+  const paymentSection = document.getElementById("commercePaymentSection");
+  const returnsSection = document.getElementById("commerceReturnsSection");
+  const warrantySection = document.getElementById("commerceWarrantySection");
+  const specialSection = document.getElementById("commerceSpecialSection");
+
+  const hasDelivery = hasDeliveryMethods || hasPickupAddress || hasDeliveryInfo || hasPickupInfo;
+  const hasPayment = hasPaymentMethods || hasPaymentInfo;
+
+  if(deliverySection) deliverySection.hidden = !hasDelivery;
+  if(paymentSection) paymentSection.hidden = !hasPayment;
+  if(returnsSection) returnsSection.hidden = !hasReturns;
+  if(warrantySection) warrantySection.hidden = !hasWarranty;
+  if(specialSection) specialSection.hidden = !hasSpecial;
+
+  const hasAny = hasDelivery || hasPayment || hasReturns || hasWarranty || hasSpecial;
+
+  if(openButton) openButton.hidden = !hasAny;
+  if(!modal) return;
+
+  const closeModal = () => {
+    modal.hidden = true;
+    document.body.classList.remove("commerce-modal-open");
+  };
+
+  if(openButton){
+    openButton.onclick = () => {
+      modal.hidden = false;
+      document.body.classList.add("commerce-modal-open");
+    };
+  }
+
+  if(closeButton) closeButton.onclick = closeModal;
+  if(doneButton) doneButton.onclick = closeModal;
+
+  modal.onclick = event => {
+    if(event.target === modal) closeModal();
+  };
 }
 
 export function renderCategories(categories, activeCategory, onSelect){
