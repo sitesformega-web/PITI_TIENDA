@@ -1,3 +1,5 @@
+import { buildPublicCopy } from "./legal-copy.js?v=public-copy-v1";
+
 const instagramIcon = `
 <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
   <rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle>
@@ -88,6 +90,7 @@ export function applyBranding(store, platform){
   renderPromo(store.promo);
   renderSocialLinks(store.social);
   renderBusinessInfo(store.business);
+  renderPublicCopy(store.business);
   renderCommercialConditions(store.business);
 }
 
@@ -195,6 +198,84 @@ function renderBusinessInfo(business){
 }
 
 
+
+function setPublicCopyText(id, value){
+  const target = document.getElementById(id);
+  if(!target) return;
+
+  target.textContent = String(value || "").trim();
+}
+
+function configurePublicContactLink(target, value){
+  if(!target) return false;
+
+  const clean = String(value || "").trim();
+  target.textContent = clean;
+  target.removeAttribute("href");
+
+  if(!clean){
+    return false;
+  }
+
+  if(clean.includes("@")){
+    target.href = `mailto:${clean}`;
+    return true;
+  }
+
+  if(/^https?:\/\//i.test(clean)){
+    target.href = clean;
+    return true;
+  }
+
+  const phone = clean.replace(/[^\d+]/g, "");
+  if(phone.replace(/\D/g, "").length >= 6){
+    target.href = `tel:${phone}`;
+    return true;
+  }
+
+  return true;
+}
+
+function renderPublicCopy(business){
+  business = business || {};
+  const copy = buildPublicCopy(business);
+
+  setPublicCopyText("publicOrderTitle", copy.order.title);
+  setPublicCopyText("publicOrderText1", copy.order.paragraphs[0]);
+  setPublicCopyText("publicOrderText2", copy.order.paragraphs[1]);
+  setPublicCopyText("publicOrderText3", copy.order.paragraphs[2]);
+
+  setPublicCopyText("publicCatalogTitle", copy.catalog.title);
+  setPublicCopyText("publicCatalogText1", copy.catalog.paragraphs[0]);
+  setPublicCopyText("publicCatalogText2", copy.catalog.paragraphs[1]);
+
+  setPublicCopyText("publicConsumerTitle", copy.consumer.title);
+  setPublicCopyText("publicConsumerText", copy.consumer.text);
+
+  const consumerLink = document.getElementById("publicConsumerLink");
+  if(consumerLink){
+    consumerLink.textContent = copy.consumer.linkLabel;
+    consumerLink.href = copy.consumer.url;
+  }
+
+  setPublicCopyText("storageModalTitle", copy.privacy.title);
+  setPublicCopyText("storagePrivacyText1", copy.privacy.paragraphs[0]);
+  setPublicCopyText("storagePrivacyText2", copy.privacy.paragraphs[1]);
+  setPublicCopyText("storagePrivacyText3", copy.privacy.paragraphs[2]);
+  setPublicCopyText("storagePrivacyContactLabel", copy.privacy.contactLabel);
+
+  const privacyRow = document.getElementById("storagePrivacyContactRow");
+  const privacyLink = document.getElementById("storagePrivacyContact");
+  const hasPrivacyContact = configurePublicContactLink(
+    privacyLink,
+    business.privacyContact
+  );
+
+  if(privacyRow){
+    privacyRow.hidden = !hasPrivacyContact;
+  }
+}
+
 const DELIVERY_LABELS = {
   delivery: "Delivery",
   pickup: "Retiro en local",
@@ -299,7 +380,7 @@ function renderCommercialConditions(business){
   if(warrantySection) warrantySection.hidden = !hasWarranty;
   if(specialSection) specialSection.hidden = !hasSpecial;
 
-  const hasAny = hasDelivery || hasPayment || hasReturns || hasWarranty || hasSpecial;
+  const hasAny = true;
 
   if(openButton) openButton.hidden = !hasAny;
   if(!modal) return;
