@@ -15,13 +15,18 @@ import {
   decrementCartItem,
   removeFromCart,
   clearCart,
-  openWhatsAppOrder
+  openWhatsAppOrder,
+  getCartPersistenceState,
+  setCartPersistenceEnabled,
+  clearCartStorageNotice,
+  reconcileCart
 } from "./cart.js";
 import {
   applyBranding,
   renderCategories,
   renderProducts,
   renderCart,
+  renderCartPersistence,
   setLoading,
   renderLoadError,
   openModal,
@@ -90,12 +95,18 @@ function refreshCart(){
       refreshCart();
     }
   });
+
+  renderCartPersistence(getCartPersistenceState(), enabled => {
+    setCartPersistenceEnabled(enabled);
+    refreshCart();
+  });
 }
 
 function handleAddToCart(id, quantity = 1){
   const product = getProductById(id);
   if(!product) return;
   addToCart(product, quantity);
+  clearCartStorageNotice();
   closeModal();
   refreshCart();
 }
@@ -113,9 +124,12 @@ async function bootstrap(){
     }
 
     applyBranding(ACTIVE_STORE_CONFIG, PLATFORM_CONFIG);
-    refreshCart();
 
-    setProducts(await fetchProducts());
+    const products = await fetchProducts();
+    setProducts(products);
+    reconcileCart(products);
+
+    refreshCart();
     refreshCategories();
     refreshCatalog();
   }catch(error){
@@ -148,6 +162,7 @@ document.getElementById("sendCartBtnMobile").addEventListener("click", () => ope
 
 function handleClearCart(){
   clearCart();
+  clearCartStorageNotice();
   refreshCart();
 }
 document.getElementById("clearCartBtn").addEventListener("click", handleClearCart);
