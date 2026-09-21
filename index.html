@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./css/app.css">
+  <link rel="stylesheet" href="./css/app.css?v=notice-takedown-v1-2">
 </head>
 <body>
 <div class="app">
@@ -267,6 +267,110 @@
   </section>
 </div>
 
+
+<div class="storage-modal-backdrop report-modal-backdrop" id="contentReportModal" hidden>
+  <section
+    class="storage-modal report-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="contentReportTitle"
+    aria-describedby="contentReportIntro"
+  >
+    <div class="storage-modal-kicker">ASTREA™</div>
+    <h2 id="contentReportTitle">Reportar contenido o uso indebido</h2>
+
+    <p id="contentReportIntro" class="report-modal-intro">
+      Revisá la información y agregá los detalles que consideres necesarios.
+      Al continuar se abrirá tu aplicación de correo con el mensaje preparado.
+      Nada se envía desde el catálogo en este paso.
+    </p>
+
+    <div class="report-summary" aria-label="Datos del reporte">
+      <div class="report-summary-row">
+        <span>Destino</span>
+        <strong id="contentReportDestination"></strong>
+      </div>
+      <div class="report-summary-row">
+        <span>Comercio</span>
+        <strong id="contentReportCommerce"></strong>
+      </div>
+      <div class="report-summary-row">
+        <span>URL del catálogo</span>
+        <strong id="contentReportCatalogUrl"></strong>
+      </div>
+    </div>
+
+    <form class="report-form" id="contentReportForm">
+      <label class="report-field">
+        <span>Tipo de reporte <strong aria-hidden="true">*</strong></span>
+        <select id="contentReportType" required>
+          <option value="">Seleccionar</option>
+          <option>Contenido engañoso o suplantación</option>
+          <option>Propiedad intelectual</option>
+          <option>Contenido prohibido o abusivo</option>
+          <option>Uso indebido de la plataforma</option>
+          <option>Problema técnico relacionado con el catálogo</option>
+          <option>Otro</option>
+        </select>
+      </label>
+
+      <label class="report-field">
+        <span>Contenido o producto reportado</span>
+        <input
+          type="text"
+          id="contentReportContent"
+          maxlength="300"
+          placeholder="Ej.: nombre del producto, publicación o sección"
+        >
+      </label>
+
+      <label class="report-field">
+        <span>Descripción o comentarios <strong aria-hidden="true">*</strong></span>
+        <textarea
+          id="contentReportDescription"
+          rows="4"
+          maxlength="2000"
+          required
+          placeholder="Contanos brevemente qué sucede."
+        ></textarea>
+      </label>
+
+      <label class="report-field">
+        <span>Evidencia o enlaces relevantes</span>
+        <textarea
+          id="contentReportEvidence"
+          rows="3"
+          maxlength="1500"
+          placeholder="Podés agregar enlaces u otra referencia útil."
+        ></textarea>
+      </label>
+
+      <label class="report-field">
+        <span>Contacto para respuesta <small>(opcional)</small></span>
+        <input
+          type="text"
+          id="contentReportContact"
+          maxlength="200"
+          placeholder="Email, teléfono u otro medio de contacto"
+        >
+      </label>
+
+      <div class="report-modal-actions">
+        <button
+          type="button"
+          class="storage-btn storage-btn-secondary"
+          id="contentReportCancelBtn"
+        >Cancelar</button>
+        <button
+          type="submit"
+          class="storage-btn storage-btn-primary"
+          id="contentReportSubmitBtn"
+        >Enviar mail</button>
+      </div>
+    </form>
+  </section>
+</div>
+
 <div class="storage-consent" id="storageConsent" hidden role="region" aria-label="Preferencia de almacenamiento">
   <div class="storage-consent-copy">
     Podemos guardar tu carrito en este dispositivo durante 5 días para que lo recuperes al volver.
@@ -303,6 +407,6 @@
   </section>
 </div>
 
-<script type="module" src="./js/app.js?v=notice-takedown-v1"></script>
+<script type="module" src="./js/app.js?v=notice-takedown-v1-2"></script>
 </body>
 </html>
