@@ -1438,3 +1438,142 @@ body.commerce-modal-open{
     gap:2px;
   }
 }
+
+
+/* ASTREA — Commercial conditions visual refinement v1.1 */
+.business-info-link{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:12px;
+  padding:0;
+  border:0;
+  background:transparent;
+  color:rgba(255,255,255,.96);
+  font:inherit;
+  font-size:12px;
+  font-weight:500;
+  line-height:1.35;
+  cursor:pointer;
+  text-decoration:none;
+}
+
+.business-info-link:hover{
+  text-decoration:underline;
+}
+
+.footer-storage-link{
+  font-size:10px;
+}
+
+.commerce-modal{
+  width:min(460px,100%);
+  max-height:min(84vh,760px);
+  overflow:auto;
+  padding:24px 24px 20px;
+  border:1px solid #e6e7eb;
+  border-radius:22px;
+  background:#fff;
+  color:#111827;
+  box-shadow:0 24px 70px rgba(17,24,39,.22);
+}
+
+.commerce-modal-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:14px;
+}
+
+.commerce-modal-kicker{
+  margin-bottom:6px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+
+.commerce-modal h2{
+  margin:0;
+  font-size:18px;
+  line-height:1.25;
+}
+
+.commerce-modal-close{
+  width:34px;
+  height:34px;
+  flex:0 0 34px;
+  border:1px solid #ececf2;
+  border-radius:12px;
+  background:#f4f5f7;
+  color:#4b5563;
+  cursor:pointer;
+}
+
+.commerce-conditions-list{
+  display:grid;
+  gap:14px;
+  margin-top:16px;
+}
+
+.commerce-condition-section{
+  padding-top:14px;
+  border-top:1px solid #ececf2;
+}
+
+.commerce-condition-section:first-child{
+  padding-top:0;
+  border-top:0;
+}
+
+.commerce-condition-section h3{
+  margin:0 0 8px;
+  font-size:13px;
+  font-weight:700;
+  color:#2b2f36;
+}
+
+.commerce-condition-line{
+  display:grid;
+  grid-template-columns:minmax(88px,auto) 1fr;
+  gap:10px;
+  align-items:baseline;
+  margin-top:6px;
+  font-size:12px;
+}
+
+.commerce-condition-line span{
+  color:#8a94a6;
+}
+
+.commerce-condition-line strong{
+  font-weight:500;
+  color:#2b2f36;
+}
+
+.commerce-condition-section p{
+  margin:7px 0 0;
+  color:#667085;
+  font-size:12px;
+  line-height:1.55;
+  white-space:pre-line;
+}
+
+.commerce-modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:18px;
+}
+
+@media(max-width:560px){
+  .commerce-modal{
+    padding:20px 18px 18px;
+    border-radius:18px;
+  }
+
+  .commerce-condition-line{
+    grid-template-columns:1fr;
+    gap:2px;
+  }
+}
