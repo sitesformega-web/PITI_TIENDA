@@ -1,5 +1,5 @@
-import { STORE_CONFIG, PLATFORM_CONFIG } from "./config.js";
-import { fetchProducts, fetchBusinessConfig } from "./api.js";
+import { STORE_CONFIG, PLATFORM_CONFIG } from "./config.js?v=cart-storage-v1-1";
+import { fetchProducts, fetchBusinessConfig } from "./api.js?v=cart-storage-v1-1";
 import {
   setProducts,
   getProductById,
@@ -7,7 +7,7 @@ import {
   setActiveCategory,
   getActiveCategory,
   filterProducts
-} from "./catalog.js";
+} from "./catalog.js?v=cart-storage-v1-1";
 import {
   getCart,
   addToCart,
@@ -20,20 +20,20 @@ import {
   setCartPersistenceEnabled,
   clearCartStorageNotice,
   reconcileCart
-} from "./cart.js";
+} from "./cart.js?v=cart-storage-v1-1";
 import {
   applyBranding,
   renderCategories,
   renderProducts,
   renderCart,
-  renderCartPersistence,
+  renderStoragePreference,
   setLoading,
   renderLoadError,
   openModal,
   closeModal,
   openDrawer,
   closeDrawer
-} from "./ui.js";
+} from "./ui.js?v=cart-storage-v1-1";
 
 const searchInput = document.getElementById("searchInput");
 const catsDrawerBack = document.getElementById("catsDrawerBack");
@@ -79,6 +79,12 @@ function refreshCategories(){
   });
 }
 
+function handleStoragePreferenceChange(enabled){
+  setCartPersistenceEnabled(enabled);
+  clearCartStorageNotice();
+  refreshCart();
+}
+
 function refreshCart(){
   renderCart(getCart(), {
     storeConfig: ACTIVE_STORE_CONFIG,
@@ -96,9 +102,8 @@ function refreshCart(){
     }
   });
 
-  renderCartPersistence(getCartPersistenceState(), enabled => {
-    setCartPersistenceEnabled(enabled);
-    refreshCart();
+  renderStoragePreference(getCartPersistenceState(), {
+    onChange: handleStoragePreferenceChange
   });
 }
 
