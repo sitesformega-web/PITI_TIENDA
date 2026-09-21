@@ -1577,3 +1577,64 @@ body.commerce-modal-open{
     gap:2px;
   }
 }
+
+
+/* ASTREA — Textos públicos breves v1 */
+.commerce-standard-section p + p{
+  margin-top:9px;
+}
+
+.commerce-authority-link{
+  display:inline-flex;
+  margin-top:9px;
+  color:var(--accent);
+  font-size:11px;
+  font-weight:600;
+  text-decoration:none;
+}
+
+.commerce-authority-link:hover{
+  text-decoration:underline;
+}
+
+.storage-public-copy p{
+  margin:10px 0 0;
+}
+
+.storage-public-copy p:first-child{
+  margin-top:10px;
+}
+
+.storage-public-copy--secondary{
+  margin-top:15px;
+  padding-top:14px;
+  border-top:1px solid #ececf2;
+}
+
+.storage-privacy-contact{
+  display:flex;
+  align-items:baseline;
+  gap:8px;
+  flex-wrap:wrap;
+  margin-top:10px;
+  font-size:11px;
+}
+
+.storage-privacy-contact[hidden]{
+  display:none !important;
+}
+
+.storage-privacy-contact span{
+  color:#667085;
+}
+
+.storage-privacy-contact a{
+  color:var(--accent);
+  font-weight:600;
+  text-decoration:none;
+  overflow-wrap:anywhere;
+}
+
+.storage-privacy-contact a:hover{
+  text-decoration:underline;
+}
