@@ -1,4 +1,4 @@
-import { STORE_CONFIG, PLATFORM_CONFIG } from "./config.js?v=cart-storage-v1-1";
+import { STORE_CONFIG, PLATFORM_CONFIG } from "./config.js?v=notice-takedown-v1";
 import { fetchProducts, fetchBusinessConfig } from "./api.js?v=cart-storage-v1-1";
 import {
   setProducts,
@@ -33,7 +33,7 @@ import {
   closeModal,
   openDrawer,
   closeDrawer
-} from "./ui.js?v=public-copy-v1";
+} from "./ui.js?v=notice-takedown-v1";
 
 const searchInput = document.getElementById("searchInput");
 const catsDrawerBack = document.getElementById("catsDrawerBack");
