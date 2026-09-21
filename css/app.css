@@ -1282,3 +1282,159 @@ body.storage-modal-open{
     flex:1;
   }
 }
+
+
+/* ASTREA — Condiciones comerciales públicas v1 */
+.footer-info-link{
+  appearance:none;
+  border:0;
+  padding:0;
+  background:transparent;
+  color:inherit;
+  font:inherit;
+  cursor:pointer;
+  opacity:.82;
+}
+
+.footer-info-link:hover{
+  text-decoration:underline;
+  opacity:1;
+}
+
+body.commerce-modal-open{
+  overflow:hidden;
+}
+
+.commerce-modal-backdrop{
+  position:fixed;
+  inset:0;
+  z-index:1200;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  background:rgba(17,24,39,.42);
+  backdrop-filter:blur(2px);
+}
+
+.commerce-modal-backdrop[hidden]{
+  display:none !important;
+}
+
+.commerce-modal{
+  width:min(620px,100%);
+  max-height:min(82vh,760px);
+  overflow:auto;
+  padding:22px;
+  border:1px solid #ececf2;
+  border-radius:18px;
+  background:#fff;
+  color:#222;
+  box-shadow:0 24px 70px rgba(17,24,39,.22);
+}
+
+.commerce-modal-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+}
+
+.commerce-modal-kicker{
+  margin-bottom:4px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+
+.commerce-modal h2{
+  margin:0;
+  font-size:20px;
+  line-height:1.25;
+}
+
+.commerce-modal-close{
+  width:34px;
+  height:34px;
+  flex:0 0 34px;
+  border:0;
+  border-radius:10px;
+  background:#f4f5f7;
+  color:#444;
+  cursor:pointer;
+}
+
+.commerce-conditions-list{
+  display:grid;
+  gap:0;
+  margin-top:18px;
+}
+
+.commerce-condition-section{
+  padding:15px 0;
+  border-top:1px solid #ececf2;
+}
+
+.commerce-condition-section[hidden]{
+  display:none;
+}
+
+.commerce-condition-section h3{
+  margin:0 0 9px;
+  font-size:13px;
+  font-weight:700;
+}
+
+.commerce-condition-section p{
+  margin:7px 0 0;
+  color:#5b6472;
+  font-size:12px;
+  line-height:1.55;
+  white-space:pre-line;
+}
+
+.commerce-condition-line{
+  display:grid;
+  grid-template-columns:minmax(90px,auto) 1fr;
+  gap:10px;
+  align-items:baseline;
+  margin-top:6px;
+  font-size:12px;
+}
+
+.commerce-condition-line[hidden]{
+  display:none;
+}
+
+.commerce-condition-line span{
+  color:var(--muted);
+}
+
+.commerce-condition-line strong{
+  font-weight:600;
+}
+
+.commerce-modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  margin-top:8px;
+}
+
+@media(max-width:560px){
+  .footer-inner--center{
+    gap:7px;
+    flex-wrap:wrap;
+  }
+
+  .commerce-modal{
+    padding:18px;
+    border-radius:16px;
+  }
+
+  .commerce-condition-line{
+    grid-template-columns:1fr;
+    gap:2px;
+  }
+}
