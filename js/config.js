@@ -1,6 +1,6 @@
 export const STORE_CONFIG = {
-  name: "PITI TIENDA",
-  catalogTitle: "PITI TIENDA",
+  name: "Catálogo",
+  catalogTitle: "Catálogo",
   logo: "https://raw.githubusercontent.com/sitesformega-web/PITI_TIENDA/main/STOCK/PITI%20TIENDA.png",
   colors: {
     background: "#f6f7fb",
@@ -14,11 +14,9 @@ export const STORE_CONFIG = {
     label: "Gs."
   },
   contact: {
-    whatsapp: "595971222146"
+    whatsapp: ""
   },
-  social: {
-    instagram: "https://www.instagram.com/gs4_fortin_pitiantuta/"
-  },
+  social: {},
   promo: {
     image: "https://raw.githubusercontent.com/sitesformega-web/PITI_TIENDA/main/STOCK/banner%201200x240.jpg",
     mobileImage: "",
