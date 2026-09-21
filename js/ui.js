@@ -87,11 +87,13 @@ export function applyBranding(store, platform){
 
   renderPromo(store.promo);
   renderSocialLinks(store.social);
+  renderBusinessInfo(store.business);
 }
 
 function renderSocialLinks(social){
   const container = document.getElementById("socialLinks");
   container.innerHTML = "";
+
   if(social?.instagram){
     const link = document.createElement("a");
     link.className = "social";
@@ -102,6 +104,93 @@ function renderSocialLinks(social){
     link.innerHTML = instagramIcon;
     container.appendChild(link);
   }
+
+  [
+    ["Facebook", social?.facebook],
+    ["TikTok", social?.tiktok]
+  ].forEach(([label, href]) => {
+    if(!href) return;
+    const link = document.createElement("a");
+    link.className = "social social-text";
+    link.href = href;
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.setAttribute("aria-label", label);
+    link.textContent = label.slice(0, 1);
+    container.appendChild(link);
+  });
+}
+
+function setBusinessField(itemId, valueId, value, href){
+  const item = document.getElementById(itemId);
+  const target = document.getElementById(valueId);
+  const clean = String(value || "").trim();
+
+  if(!item || !target) return;
+
+  if(!clean){
+    item.hidden = true;
+    target.textContent = "";
+    if(target.tagName === "A") target.removeAttribute("href");
+    return;
+  }
+
+  target.textContent = clean;
+  if(target.tagName === "A" && href){
+    target.href = href;
+  }
+  item.hidden = false;
+}
+
+function normalizePhoneForLink(value){
+  return String(value || "").replace(/[^\d+]/g, "");
+}
+
+function normalizeWhatsAppForLink(value){
+  return String(value || "").replace(/\D/g, "");
+}
+
+function renderBusinessInfo(business){
+  const section = document.getElementById("businessInfo");
+  if(!section) return;
+
+  const name = String(business?.businessName || "").trim();
+  const legalName = String(business?.legalName || "").trim();
+
+  if(!name && !legalName){
+    section.hidden = true;
+    return;
+  }
+
+  document.getElementById("businessInfoTitle").textContent = name || legalName;
+
+  const legal = document.getElementById("businessInfoLegal");
+  legal.textContent = legalName && legalName !== name ? legalName : "";
+
+  setBusinessField("businessRucItem", "businessRuc", business?.ruc);
+  setBusinessField("businessLocationItem", "businessLocation", business?.publicLocation);
+  setBusinessField(
+    "businessEmailItem",
+    "businessEmail",
+    business?.email,
+    business?.email ? `mailto:${business.email}` : ""
+  );
+  setBusinessField(
+    "businessPhoneItem",
+    "businessPhone",
+    business?.phone,
+    business?.phone ? `tel:${normalizePhoneForLink(business.phone)}` : ""
+  );
+
+  const whatsappDigits = normalizeWhatsAppForLink(business?.whatsapp);
+  setBusinessField(
+    "businessWhatsappItem",
+    "businessWhatsapp",
+    business?.whatsapp,
+    whatsappDigits ? `https://wa.me/${whatsappDigits}` : ""
+  );
+
+  section.hidden = false;
 }
 
 export function renderCategories(categories, activeCategory, onSelect){
