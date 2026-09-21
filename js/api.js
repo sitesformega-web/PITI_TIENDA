@@ -50,7 +50,7 @@ function mapProduct(raw){
 }
 
 export async function fetchProducts(){
-  const response = await fetch(ENVIRONMENT.catalogUrl, { cache: "no-store" });
+  const response = await fetch(getCatalogEndpoint("data"), { cache: "no-store" });
   const data = await response.json();
 
   if(!Array.isArray(data)){
@@ -58,4 +58,21 @@ export async function fetchProducts(){
   }
 
   return data.map(mapProduct);
+}
+
+function getCatalogEndpoint(view){
+  const url = new URL(ENVIRONMENT.catalogUrl);
+  if(view) url.searchParams.set("view", view);
+  return url.toString();
+}
+
+export async function fetchBusinessConfig(){
+  const response = await fetch(getCatalogEndpoint("business"), { cache: "no-store" });
+  const data = await response.json();
+
+  if(!response.ok || !data || Array.isArray(data) || typeof data !== "object" || data.error){
+    throw new Error(data?.error || "La información pública del comercio no está disponible.");
+  }
+
+  return data;
 }
