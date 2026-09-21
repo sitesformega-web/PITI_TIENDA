@@ -33,5 +33,8 @@ export const PLATFORM_CONFIG = {
   name: "ASTREA",
   poweredByLabel: "POWERED BY",
   // Reemplazar por la URL oficial de ASTREA cuando esté definida.
-  url: "#"
+  url: "#",
+  channels: {
+    contentReportUrl: "mailto:astrea.admin@gmail.com"
+  }
 };
