@@ -1638,3 +1638,141 @@ body.commerce-modal-open{
 .storage-privacy-contact a:hover{
   text-decoration:underline;
 }
+
+
+/* ASTREA — Notice & Takedown v1.2: modal previo al mail */
+body.report-modal-open{
+  overflow:hidden;
+}
+
+.report-modal-backdrop{
+  z-index:1350;
+}
+
+.report-modal{
+  width:min(520px,100%);
+  max-height:min(88vh,820px);
+  overflow:auto;
+}
+
+.report-modal-intro{
+  margin-bottom:16px !important;
+}
+
+.report-summary{
+  display:grid;
+  gap:8px;
+  margin:0 0 18px;
+  padding:12px;
+  border:1px solid #ececf2;
+  border-radius:12px;
+  background:#fafbfc;
+}
+
+.report-summary-row{
+  display:grid;
+  grid-template-columns:84px minmax(0,1fr);
+  gap:10px;
+  align-items:baseline;
+  font-size:11px;
+}
+
+.report-summary-row span{
+  color:#8a94a6;
+}
+
+.report-summary-row strong{
+  min-width:0;
+  color:#374151;
+  font-weight:600;
+  overflow-wrap:anywhere;
+}
+
+.report-form{
+  display:grid;
+  gap:13px;
+}
+
+.report-field{
+  display:grid;
+  gap:6px;
+}
+
+.report-field > span{
+  color:#374151;
+  font-size:11px;
+  font-weight:600;
+}
+
+.report-field > span strong{
+  color:var(--accent);
+}
+
+.report-field > span small{
+  color:#8a94a6;
+  font-size:10px;
+  font-weight:500;
+}
+
+.report-field input,
+.report-field select,
+.report-field textarea{
+  width:100%;
+  box-sizing:border-box;
+  border:1px solid #dde1e7;
+  border-radius:10px;
+  background:#fff;
+  color:#2b2f36;
+  font:inherit;
+  font-size:12px;
+  line-height:1.45;
+  outline:none;
+}
+
+.report-field input,
+.report-field select{
+  min-height:38px;
+  padding:0 10px;
+}
+
+.report-field textarea{
+  min-height:80px;
+  padding:9px 10px;
+  resize:vertical;
+}
+
+.report-field input:focus,
+.report-field select:focus,
+.report-field textarea:focus{
+  border-color:var(--accent);
+  box-shadow:0 0 0 2px color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.report-field input::placeholder,
+.report-field textarea::placeholder{
+  color:#a0a8b6;
+}
+
+.report-modal-actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:8px;
+  margin-top:5px;
+  padding-top:14px;
+  border-top:1px solid #ececf2;
+}
+
+@media(max-width:560px){
+  .report-modal{
+    padding:20px 18px 18px;
+  }
+
+  .report-summary-row{
+    grid-template-columns:1fr;
+    gap:2px;
+  }
+
+  .report-modal-actions .storage-btn{
+    flex:1;
+  }
+}
