@@ -326,6 +326,45 @@ export function renderCart(items, { onIncrement, onDecrement, onRemove, storeCon
   document.getElementById("cartCountFab").textContent = units;
 }
 
+
+export function renderCartPersistence(state, onChange){
+  const toggles = [
+    document.getElementById("cartPersistToggle"),
+    document.getElementById("cartPersistToggleMobile")
+  ].filter(Boolean);
+
+  const notes = [
+    document.getElementById("cartPersistenceNote"),
+    document.getElementById("cartPersistenceNoteMobile")
+  ].filter(Boolean);
+
+  const enabled = Boolean(state?.enabled);
+  const ttlDays = Number(state?.ttlDays) || 5;
+  const notice = String(state?.notice || "");
+
+  toggles.forEach(toggle => {
+    toggle.checked = enabled;
+    toggle.onchange = () => onChange(Boolean(toggle.checked));
+  });
+
+  let note = enabled
+    ? `Se guardará hasta ${ttlDays} días desde la última modificación.`
+    : "Opcional. Si queda desactivado, el carrito funciona sólo durante esta visita.";
+
+  if(notice === "legacy"){
+    note = "Recuperamos tu carrito anterior para esta visita. Activá esta opción si querés conservarlo.";
+  }else if(notice === "expired"){
+    note = `El carrito guardado venció después de ${ttlDays} días y fue eliminado.`;
+  }else if(notice === "reconciled"){
+    note = "Actualizamos el carrito según la disponibilidad actual del catálogo.";
+  }
+
+  notes.forEach(target => {
+    target.textContent = note;
+    target.dataset.state = notice || (enabled ? "enabled" : "disabled");
+  });
+}
+
 export function setLoading(isLoading){
   document.getElementById("loader").style.display = isLoading ? "flex" : "none";
 }
