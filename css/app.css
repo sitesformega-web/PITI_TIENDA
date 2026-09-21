@@ -627,6 +627,99 @@ button,input {
   margin-top:4px
 }
 
+
+.business-info {
+  margin-top:28px;
+  padding:18px;
+  background:var(--card);
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(20,20,50,.06)
+}
+
+.business-info[hidden] {
+  display:none
+}
+
+.business-info-head {
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:16px;
+  margin-bottom:14px
+}
+
+.business-info-kicker {
+  margin-bottom:4px;
+  color:var(--muted);
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.06em;
+  text-transform:uppercase
+}
+
+.business-info-title {
+  margin:0;
+  font-size:17px;
+  line-height:1.25
+}
+
+.business-info-legal {
+  margin-top:4px;
+  color:var(--muted);
+  font-size:11px
+}
+
+.business-info-grid {
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px
+}
+
+.business-info-item {
+  min-width:0;
+  padding:10px 11px;
+  border:1px solid #ececf2;
+  border-radius:10px;
+  background:#fafbfc
+}
+
+.business-info-item[hidden] {
+  display:none
+}
+
+.business-info-item span {
+  display:block;
+  margin-bottom:4px;
+  color:var(--muted);
+  font-size:9px;
+  font-weight:700;
+  text-transform:uppercase;
+  letter-spacing:.04em
+}
+
+.business-info-item strong,
+.business-info-item a {
+  display:block;
+  color:#222;
+  font-size:11px;
+  line-height:1.4;
+  overflow-wrap:anywhere
+}
+
+.business-info-item a {
+  text-decoration:none
+}
+
+.business-info-item a:hover {
+  text-decoration:underline
+}
+
+.social-text {
+  font-size:12px;
+  font-weight:700;
+  text-decoration:none
+}
+
 .footer {
   margin-top:28px;
   background:var(--accent);
@@ -779,6 +872,14 @@ button,input {
 
   .modal-main-image {
     max-height:48vh
+  }
+
+  .business-info {
+    padding:14px
+  }
+
+  .business-info-grid {
+    grid-template-columns:1fr
   }
 
   .footer-inner {
