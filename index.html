@@ -56,6 +56,39 @@
     </aside>
   </main>
 
+  <section class="business-info" id="businessInfo" hidden aria-labelledby="businessInfoTitle">
+    <div class="business-info-head">
+      <div>
+        <div class="business-info-kicker">Información del comercio</div>
+        <h2 id="businessInfoTitle" class="business-info-title"></h2>
+        <div id="businessInfoLegal" class="business-info-legal"></div>
+      </div>
+    </div>
+
+    <div class="business-info-grid">
+      <div class="business-info-item" id="businessRucItem" hidden>
+        <span>RUC</span>
+        <strong id="businessRuc"></strong>
+      </div>
+      <div class="business-info-item" id="businessLocationItem" hidden>
+        <span>Ubicación</span>
+        <strong id="businessLocation"></strong>
+      </div>
+      <div class="business-info-item" id="businessEmailItem" hidden>
+        <span>Email</span>
+        <a id="businessEmail" href="#"></a>
+      </div>
+      <div class="business-info-item" id="businessPhoneItem" hidden>
+        <span>Teléfono</span>
+        <a id="businessPhone" href="#"></a>
+      </div>
+      <div class="business-info-item" id="businessWhatsappItem" hidden>
+        <span>WhatsApp</span>
+        <a id="businessWhatsapp" href="#" target="_blank" rel="noopener"></a>
+      </div>
+    </div>
+  </section>
+
   <footer class="footer">
     <div class="footer-inner">
       <a class="powered-by" id="poweredBy" href="#" target="_blank" rel="noopener">
