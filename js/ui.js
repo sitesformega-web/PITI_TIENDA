@@ -236,7 +236,20 @@ function configurePublicContactLink(target, value){
   return true;
 }
 
-function buildContentReportUrl(baseUrl, businessName){
+function getMailtoRecipient(baseUrl){
+  const cleanBase = String(baseUrl || "").trim();
+
+  if(!cleanBase.toLowerCase().startsWith("mailto:")){
+    return cleanBase;
+  }
+
+  return cleanBase
+    .slice("mailto:".length)
+    .split("?")[0]
+    .trim();
+}
+
+function buildContentReportUrl(baseUrl, report = {}){
   const cleanBase = String(baseUrl || "").trim();
 
   if(!cleanBase){
@@ -249,23 +262,129 @@ function buildContentReportUrl(baseUrl, businessName){
 
   const separator = cleanBase.includes("?") ? "&" : "?";
   const subject = "Reporte de contenido o uso indebido - Catálogo Express®";
+
   const body = [
     "Hola ASTREA™,",
     "",
     "Quiero reportar contenido o uso indebido en un catálogo.",
     "",
-    `Comercio: ${String(businessName || "").trim() || "-"}`,
-    `URL del catálogo: ${window.location.href}`,
+    `Comercio: ${String(report.businessName || "").trim() || "-"}`,
+    `URL del catálogo: ${String(report.catalogUrl || "").trim() || "-"}`,
     "",
-    "Tipo de reporte:",
-    "Contenido o producto reportado:",
-    "Descripción:",
+    `Tipo de reporte: ${String(report.type || "").trim() || "-"}`,
+    `Contenido o producto reportado: ${String(report.content || "").trim() || "-"}`,
+    "",
+    "Descripción o comentarios:",
+    String(report.description || "").trim() || "-",
+    "",
     "Evidencia o enlaces relevantes:",
+    String(report.evidence || "").trim() || "-",
     "",
-    "Contacto para respuesta (opcional):"
+    `Contacto para respuesta (opcional): ${String(report.contact || "").trim() || "-"}`
   ].join("\n");
 
   return `${cleanBase}${separator}subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+function configureContentReportFlow(reportBaseUrl, businessName){
+  const reportLink = document.getElementById("publicContentReportLink");
+  const modal = document.getElementById("contentReportModal");
+  const form = document.getElementById("contentReportForm");
+  const cancelButton = document.getElementById("contentReportCancelBtn");
+  const destination = document.getElementById("contentReportDestination");
+  const commerce = document.getElementById("contentReportCommerce");
+  const catalogUrl = document.getElementById("contentReportCatalogUrl");
+  const type = document.getElementById("contentReportType");
+  const content = document.getElementById("contentReportContent");
+  const description = document.getElementById("contentReportDescription");
+  const evidence = document.getElementById("contentReportEvidence");
+  const contact = document.getElementById("contentReportContact");
+
+  if(!reportLink || !modal || !form){
+    return;
+  }
+
+  const cleanBaseUrl = String(reportBaseUrl || "").trim();
+
+  if(!cleanBaseUrl){
+    reportLink.removeAttribute("href");
+    reportLink.hidden = true;
+    return;
+  }
+
+  reportLink.href = "#";
+  reportLink.hidden = false;
+
+  const closeModal = () => {
+    modal.hidden = true;
+    document.body.classList.remove("report-modal-open");
+  };
+
+  const openModal = event => {
+    if(event) event.preventDefault();
+
+    if(destination){
+      destination.textContent = getMailtoRecipient(cleanBaseUrl);
+    }
+
+    if(commerce){
+      commerce.textContent = String(businessName || "").trim() || "-";
+    }
+
+    if(catalogUrl){
+      catalogUrl.textContent = window.location.href;
+    }
+
+    modal.hidden = false;
+    document.body.classList.add("report-modal-open");
+
+    window.setTimeout(() => {
+      if(type) type.focus();
+    }, 0);
+  };
+
+  reportLink.onclick = openModal;
+
+  if(cancelButton){
+    cancelButton.onclick = closeModal;
+  }
+
+  modal.onclick = event => {
+    if(event.target === modal){
+      closeModal();
+    }
+  };
+
+  form.onsubmit = event => {
+    event.preventDefault();
+
+    if(!form.reportValidity()){
+      return;
+    }
+
+    const reportUrl = buildContentReportUrl(cleanBaseUrl, {
+      businessName,
+      catalogUrl: window.location.href,
+      type: type?.value,
+      content: content?.value,
+      description: description?.value,
+      evidence: evidence?.value,
+      contact: contact?.value
+    });
+
+    if(!reportUrl){
+      return;
+    }
+
+    closeModal();
+
+    if(reportUrl.toLowerCase().startsWith("mailto:")){
+      window.location.href = reportUrl;
+      return;
+    }
+
+    window.open(reportUrl, "_blank", "noopener");
+  };
 }
 
 function renderPublicCopy(business, platform){
@@ -288,18 +407,12 @@ function renderPublicCopy(business, platform){
 
   if(reportLink){
     reportLink.textContent = copy.catalog.reportLinkLabel;
-
-    if(reportBaseUrl){
-      reportLink.href = buildContentReportUrl(
-        reportBaseUrl,
-        business.businessName
-      );
-      reportLink.hidden = false;
-    }else{
-      reportLink.removeAttribute("href");
-      reportLink.hidden = true;
-    }
   }
+
+  configureContentReportFlow(
+    reportBaseUrl,
+    business.businessName
+  );
 
   setPublicCopyText("publicConsumerTitle", copy.consumer.title);
   setPublicCopyText("publicConsumerText", copy.consumer.text);
