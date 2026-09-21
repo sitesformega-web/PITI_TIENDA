@@ -24,7 +24,8 @@ export function buildPublicCopy(business = {}){
       paragraphs: [
         `Este catálogo pertenece a ${businessName}. El comercio es responsable de los productos, precios, disponibilidad, entrega, garantías, cambios, devoluciones y atención comercial.`,
         "Catálogo Express® es una tecnología proporcionada por ASTREA™ para facilitar la exhibición y administración del catálogo y el contacto entre el comprador y el comercio."
-      ]
+      ],
+      reportLinkLabel: "Reportar contenido o uso indebido"
     },
 
     privacy: {
