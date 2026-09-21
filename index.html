@@ -49,13 +49,6 @@
         <div id="cartItems"></div>
         <div class="cart-summary" id="cartSummary"></div>
 
-        <div class="cart-persistence" id="cartPersistence">
-          <label class="cart-persistence-option">
-            <input type="checkbox" id="cartPersistToggle">
-            <span>Guardar carrito 5 días en este dispositivo</span>
-          </label>
-          <div class="cart-persistence-note" id="cartPersistenceNote"></div>
-        </div>
 
         <div class="stack-actions">
           <button id="sendCartBtn" class="btn btn-carrito">Enviar pedido por WhatsApp</button>
@@ -116,6 +109,10 @@
       <a class="powered-by" id="poweredBy" href="#" target="_blank" rel="noopener">
         <span id="poweredByLabel">POWERED BY</span><strong id="poweredByName">ASTREA</strong>
       </a>
+      <span class="footer-legal-separator" aria-hidden="true">·</span>
+      <button type="button" class="footer-storage-link" id="openStoragePreferences">
+        Privacidad y almacenamiento
+      </button>
     </div>
   </footer>
 </div>
@@ -139,13 +136,6 @@
       <div id="cartItemsMobile"></div>
       <div class="cart-summary" id="cartSummaryMobile"></div>
 
-      <div class="cart-persistence" id="cartPersistenceMobile">
-        <label class="cart-persistence-option">
-          <input type="checkbox" id="cartPersistToggleMobile">
-          <span>Guardar carrito 5 días en este dispositivo</span>
-        </label>
-        <div class="cart-persistence-note" id="cartPersistenceNoteMobile"></div>
-      </div>
 
       <div class="stack-actions">
         <button id="sendCartBtnMobile" class="btn btn-carrito">Enviar pedido por WhatsApp</button>
@@ -185,6 +175,37 @@
   </div>
 </div>
 
-<script type="module" src="./js/app.js"></script>
+
+<div class="storage-consent" id="storageConsent" hidden role="region" aria-label="Preferencia de almacenamiento">
+  <div class="storage-consent-copy">
+    Podemos guardar tu carrito en este dispositivo durante 5 días para que lo recuperes al volver.
+  </div>
+  <div class="storage-consent-actions">
+    <button type="button" class="storage-btn storage-btn-secondary" id="storageRejectBtn">No guardar</button>
+    <button type="button" class="storage-btn storage-btn-primary" id="storageAcceptBtn">Guardar carrito</button>
+  </div>
+</div>
+
+<div class="storage-modal-backdrop" id="storageModal" hidden>
+  <section class="storage-modal" role="dialog" aria-modal="true" aria-labelledby="storageModalTitle">
+    <div class="storage-modal-kicker">ASTREA™</div>
+    <h2 id="storageModalTitle">Privacidad y almacenamiento</h2>
+    <p>
+      Catálogo Express® puede guardar temporalmente los productos de tu carrito en este dispositivo.
+      Si activás esta opción, el carrito se conserva hasta 5 días desde la última modificación.
+      Si la desactivás, el carrito funciona sólo durante la visita actual.
+    </p>
+    <label class="storage-preference-option">
+      <input type="checkbox" id="storagePreferenceToggle">
+      <span>Guardar mi carrito durante 5 días</span>
+    </label>
+    <div class="storage-preference-status" id="storagePreferenceStatus"></div>
+    <div class="storage-modal-actions">
+      <button type="button" class="storage-btn storage-btn-secondary" id="storageModalCloseBtn">Cerrar</button>
+    </div>
+  </section>
+</div>
+
+<script type="module" src="./js/app.js?v=cart-storage-v1-1"></script>
 </body>
 </html>
