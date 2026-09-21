@@ -228,6 +228,31 @@
         <h3>Productos especiales</h3>
         <p id="commerceCustomProductNotice"></p>
       </section>
+
+      <section class="commerce-condition-section commerce-standard-section" id="commerceOrderSection">
+        <h3 id="publicOrderTitle"></h3>
+        <p id="publicOrderText1"></p>
+        <p id="publicOrderText2"></p>
+        <p id="publicOrderText3"></p>
+      </section>
+
+      <section class="commerce-condition-section commerce-standard-section" id="commerceCatalogSection">
+        <h3 id="publicCatalogTitle"></h3>
+        <p id="publicCatalogText1"></p>
+        <p id="publicCatalogText2"></p>
+      </section>
+
+      <section class="commerce-condition-section commerce-standard-section" id="commerceConsumerSection">
+        <h3 id="publicConsumerTitle"></h3>
+        <p id="publicConsumerText"></p>
+        <a
+          class="commerce-authority-link"
+          id="publicConsumerLink"
+          href="#"
+          target="_blank"
+          rel="noopener"
+        ></a>
+      </section>
     </div>
 
     <div class="commerce-modal-actions">
@@ -249,23 +274,29 @@
 <div class="storage-modal-backdrop" id="storageModal" hidden>
   <section class="storage-modal" role="dialog" aria-modal="true" aria-labelledby="storageModalTitle">
     <div class="storage-modal-kicker">ASTREA™</div>
-    <h2 id="storageModalTitle">Privacidad y almacenamiento</h2>
-    <p>
-      Catálogo Express® puede guardar temporalmente los productos de tu carrito en este dispositivo.
-      Si activás esta opción, el carrito se conserva hasta 5 días desde la última modificación.
-      Si la desactivás, el carrito funciona sólo durante la visita actual.
-    </p>
+    <h2 id="storageModalTitle"></h2>
+    <div class="storage-public-copy">
+      <p id="storagePrivacyText1"></p>
+      <p id="storagePrivacyText2"></p>
+    </div>
     <label class="storage-preference-option">
       <input type="checkbox" id="storagePreferenceToggle">
       <span>Guardar mi carrito durante 5 días</span>
     </label>
     <div class="storage-preference-status" id="storagePreferenceStatus"></div>
+    <div class="storage-public-copy storage-public-copy--secondary">
+      <p id="storagePrivacyText3"></p>
+      <div class="storage-privacy-contact" id="storagePrivacyContactRow" hidden>
+        <span id="storagePrivacyContactLabel"></span>
+        <a id="storagePrivacyContact" href="#"></a>
+      </div>
+    </div>
     <div class="storage-modal-actions">
       <button type="button" class="storage-btn storage-btn-secondary" id="storageModalCloseBtn">Cerrar</button>
     </div>
   </section>
 </div>
 
-<script type="module" src="./js/app.js?v=commercial-conditions-v1-1"></script>
+<script type="module" src="./js/app.js?v=public-copy-v1"></script>
 </body>
 </html>
