@@ -33,7 +33,7 @@ import {
   closeModal,
   openDrawer,
   closeDrawer
-} from "./ui.js?v=notice-takedown-v1";
+} from "./ui.js?v=notice-takedown-v1-2";
 
 const searchInput = document.getElementById("searchInput");
 const catsDrawerBack = document.getElementById("catsDrawerBack");
