@@ -105,6 +105,13 @@ export function openWhatsAppOrder(storeConfig){
     return;
   }
 
+  const whatsapp = String(storeConfig?.contact?.whatsapp || "").replace(/\D/g, "");
+
+  if(!whatsapp){
+    alert("El comercio todavía no tiene un WhatsApp configurado para recibir pedidos.");
+    return;
+  }
+
   const lines = items.map(item => {
     const qty = `${item.quantity} × ${item.name}`;
     const code = item.code ? ` (Código: ${item.code})` : "";
@@ -123,7 +130,7 @@ export function openWhatsAppOrder(storeConfig){
   );
 
   window.open(
-    `https://wa.me/${storeConfig.contact.whatsapp}?text=${message}`,
+    `https://wa.me/${whatsapp}?text=${message}`,
     "_blank",
     "noopener"
   );
