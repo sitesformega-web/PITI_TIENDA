@@ -327,42 +327,91 @@ export function renderCart(items, { onIncrement, onDecrement, onRemove, storeCon
 }
 
 
-export function renderCartPersistence(state, onChange){
-  const toggles = [
-    document.getElementById("cartPersistToggle"),
-    document.getElementById("cartPersistToggleMobile")
-  ].filter(Boolean);
-
-  const notes = [
-    document.getElementById("cartPersistenceNote"),
-    document.getElementById("cartPersistenceNoteMobile")
-  ].filter(Boolean);
+export function renderStoragePreference(state, handlers = {}){
+  const consent = document.getElementById("storageConsent");
+  const modal = document.getElementById("storageModal");
+  const toggle = document.getElementById("storagePreferenceToggle");
+  const status = document.getElementById("storagePreferenceStatus");
+  const openButton = document.getElementById("openStoragePreferences");
+  const rejectButton = document.getElementById("storageRejectBtn");
+  const acceptButton = document.getElementById("storageAcceptBtn");
+  const closeButton = document.getElementById("storageModalCloseBtn");
 
   const enabled = Boolean(state?.enabled);
+  const decided = Boolean(state?.decided);
   const ttlDays = Number(state?.ttlDays) || 5;
   const notice = String(state?.notice || "");
 
-  toggles.forEach(toggle => {
-    toggle.checked = enabled;
-    toggle.onchange = () => onChange(Boolean(toggle.checked));
-  });
-
-  let note = enabled
-    ? `Se guardará hasta ${ttlDays} días desde la última modificación.`
-    : "Opcional. Si queda desactivado, el carrito funciona sólo durante esta visita.";
-
-  if(notice === "legacy"){
-    note = "Recuperamos tu carrito anterior para esta visita. Activá esta opción si querés conservarlo.";
-  }else if(notice === "expired"){
-    note = `El carrito guardado venció después de ${ttlDays} días y fue eliminado.`;
-  }else if(notice === "reconciled"){
-    note = "Actualizamos el carrito según la disponibilidad actual del catálogo.";
+  if(consent){
+    consent.hidden = decided;
   }
 
-  notes.forEach(target => {
-    target.textContent = note;
-    target.dataset.state = notice || (enabled ? "enabled" : "disabled");
-  });
+  if(toggle){
+    toggle.checked = enabled;
+    toggle.onchange = () => {
+      if(typeof handlers.onChange === "function"){
+        handlers.onChange(Boolean(toggle.checked));
+      }
+    };
+  }
+
+  if(status){
+    let message = enabled
+      ? `Activo: el carrito se conserva hasta ${ttlDays} días desde la última modificación.`
+      : "Desactivado: el carrito funciona sólo durante la visita actual.";
+
+    if(notice === "legacy"){
+      message = "Recuperamos tu carrito anterior para esta visita. Podés elegir si querés conservarlo.";
+    }else if(notice === "expired"){
+      message = `El carrito guardado venció después de ${ttlDays} días y fue eliminado.`;
+    }else if(notice === "reconciled"){
+      message = "Actualizamos el carrito según el catálogo actual.";
+    }
+
+    status.textContent = message;
+  }
+
+  if(openButton){
+    openButton.onclick = () => {
+      if(modal){
+        modal.hidden = false;
+        document.body.classList.add("storage-modal-open");
+      }
+    };
+  }
+
+  if(rejectButton){
+    rejectButton.onclick = () => {
+      if(typeof handlers.onChange === "function"){
+        handlers.onChange(false);
+      }
+    };
+  }
+
+  if(acceptButton){
+    acceptButton.onclick = () => {
+      if(typeof handlers.onChange === "function"){
+        handlers.onChange(true);
+      }
+    };
+  }
+
+  const closeModal = () => {
+    if(modal){
+      modal.hidden = true;
+      document.body.classList.remove("storage-modal-open");
+    }
+  };
+
+  if(closeButton){
+    closeButton.onclick = closeModal;
+  }
+
+  if(modal){
+    modal.onclick = event => {
+      if(event.target === modal) closeModal();
+    };
+  }
 }
 
 export function setLoading(isLoading){
