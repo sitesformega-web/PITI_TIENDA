@@ -110,6 +110,10 @@
         <span id="poweredByLabel">POWERED BY</span><strong id="poweredByName">ASTREA</strong>
       </a>
       <span class="footer-legal-separator" aria-hidden="true">·</span>
+      <button type="button" class="footer-info-link" id="openCommerceConditions">
+        Información y condiciones
+      </button>
+      <span class="footer-legal-separator" aria-hidden="true">·</span>
       <button type="button" class="footer-storage-link" id="openStoragePreferences">
         Privacidad y almacenamiento
       </button>
@@ -176,6 +180,63 @@
 </div>
 
 
+
+<div class="commerce-modal-backdrop" id="commerceConditionsModal" hidden>
+  <section class="commerce-modal" role="dialog" aria-modal="true" aria-labelledby="commerceConditionsTitle">
+    <div class="commerce-modal-head">
+      <div>
+        <div class="commerce-modal-kicker">Información del comercio</div>
+        <h2 id="commerceConditionsTitle">Entrega, pagos y políticas</h2>
+      </div>
+      <button type="button" class="commerce-modal-close" id="commerceConditionsCloseBtn" aria-label="Cerrar">✕</button>
+    </div>
+
+    <div class="commerce-conditions-list">
+      <section class="commerce-condition-section" id="commerceDeliverySection" hidden>
+        <h3>Entrega y retiro</h3>
+        <div class="commerce-condition-line" id="commerceDeliveryMethodsLine" hidden>
+          <span>Modalidades</span>
+          <strong id="commerceDeliveryMethods"></strong>
+        </div>
+        <div class="commerce-condition-line" id="commercePickupAddressLine" hidden>
+          <span>Retiro</span>
+          <strong id="commercePickupAddress"></strong>
+        </div>
+        <p id="commerceDeliveryInfo" hidden></p>
+        <p id="commercePickupInfo" hidden></p>
+      </section>
+
+      <section class="commerce-condition-section" id="commercePaymentSection" hidden>
+        <h3>Medios de pago</h3>
+        <div class="commerce-condition-line" id="commercePaymentMethodsLine" hidden>
+          <span>Aceptados</span>
+          <strong id="commercePaymentMethods"></strong>
+        </div>
+        <p id="commercePaymentInfo" hidden></p>
+      </section>
+
+      <section class="commerce-condition-section" id="commerceReturnsSection" hidden>
+        <h3>Cambios y devoluciones</h3>
+        <p id="commerceReturnsPolicy"></p>
+      </section>
+
+      <section class="commerce-condition-section" id="commerceWarrantySection" hidden>
+        <h3>Garantía</h3>
+        <p id="commerceWarrantyPolicy"></p>
+      </section>
+
+      <section class="commerce-condition-section" id="commerceSpecialSection" hidden>
+        <h3>Productos especiales</h3>
+        <p id="commerceCustomProductNotice"></p>
+      </section>
+    </div>
+
+    <div class="commerce-modal-actions">
+      <button type="button" class="storage-btn storage-btn-secondary" id="commerceConditionsDoneBtn">Cerrar</button>
+    </div>
+  </section>
+</div>
+
 <div class="storage-consent" id="storageConsent" hidden role="region" aria-label="Preferencia de almacenamiento">
   <div class="storage-consent-copy">
     Podemos guardar tu carrito en este dispositivo durante 5 días para que lo recuperes al volver.
@@ -206,6 +267,6 @@
   </section>
 </div>
 
-<script type="module" src="./js/app.js?v=cart-storage-v1-1"></script>
+<script type="module" src="./js/app.js?v=commercial-conditions-v1"></script>
 </body>
 </html>
